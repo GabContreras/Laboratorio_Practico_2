@@ -3,6 +3,7 @@ package gabriel.contreras.segundolaboratoriocrud2b
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,13 +22,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val txtUsuario = findViewById<EditText>(R.id.txtUsuario)
+        val txtContrasena = findViewById<EditText>(R.id.txtContrasena)
+        val btnIngresar = findViewById<Button>(R.id.btnAcceder)
         val btnRegistrarse = findViewById<TextView>(R.id.txtRegistrarse)
 
-        //Cambio de pantalla para poder registrarse
-        btnRegistrarse.setOnClickListener {
-            val pantalla2 = Intent(this,Registrarse::class.java)
-            startActivity(pantalla2)
 
+        btnIngresar.setOnClickListener {
             //Cambio de pantalla para agregar tickets
             val pantallaPrincipal = Intent(this,Ticket::class.java)
 
@@ -35,7 +36,20 @@ class MainActivity : AppCompatActivity() {
 
             val comprobacionUsuario = conexion?.prepareStatement("SELECT * FROM TB_USUARIO WHERE NOMBRE_DE_USUARIO = ? AND CONTRASENA = ?")!!
             comprobacionUsuario.setString(1, txtUsuario.text.toString())
+            comprobacionUsuario.setString(2, txtContrasena.text.toString())
+            val resultado = comprobacionUsuario.executeQuery()
 
+            if (resultado.next()) {
+                startActivity(pantallaPrincipal)
+            } else {
+                println("Usuario inválido, compruebe credenciales")
+            }
+
+        }
+        //Cambio de pantalla para poder registrarse
+        btnRegistrarse.setOnClickListener {
+            val pantalla2 = Intent(this, Registrarse::class.java)
+            startActivity(pantalla2)
         }
     }
 

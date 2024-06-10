@@ -28,7 +28,7 @@
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnAcceder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.591"
         app:layout_constraintStart_toStartOf="parent" />
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAcceder"
         android:layout_width="123dp"
         android:layout_height="53dp"
         android:layout_marginBottom="24dp"

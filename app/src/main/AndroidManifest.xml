@@ -15,6 +15,9 @@
         android:theme="@style/Theme.SegundoLaboratorioCRUD2B"
         tools:targetApi="31">
         <activity
+            android:name=".item_card"
+            android:exported="false" />
+        <activity
             android:name=".Ticket"
             android:exported="false" />
         <activity
