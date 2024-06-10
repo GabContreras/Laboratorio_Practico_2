@@ -27,21 +27,20 @@ class Registrarse : AppCompatActivity() {
         }
 
 
-        val txtUsuarioRegistrarse = findViewById<EditText>(R.id.txtNombreRegistro)
+        val txtUsuarioRegistrarse = findViewById<EditText>(R.id.txtUsuarioRegistro)
         val txtContrasenaRegistrarse = findViewById<EditText>(R.id.txtContrasenaRegistro)
         val btnRegistrarse = findViewById<Button>(R.id.btnRegistrarse)
 
-        //2- Programar los botones
-        //TODO: Boton para crear la cuenta//
-        //Al darle clic al boton se hace un insert a la base con los valores que escribe el usuario
+
+
         btnRegistrarse.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
-                //Creo un objeto de la clase conexion
-                val Conexion = ClaseConexion().cadenaConexion()
+
+                val objConexion = ClaseConexion().cadenaConexion()
 
 
                 val crearUsuario =
-                    Conexion?.prepareStatement("INSERT INTO tbUsuario(UUID_USUARIO, NOMBRE_DE_USUARIO, CONTRASENA) VALUES (?, ?, ?)")!!
+                    objConexion?.prepareStatement("INSERT INTO TB_USUARIO(UUID_USUARIO, NOMBRE_DE_USUARIO, CONTRASENA) VALUES (?, ?, ?)")!!
                 crearUsuario.setString(1, UUID.randomUUID().toString())
                 crearUsuario.setString(2, txtUsuarioRegistrarse.text.toString())
                 crearUsuario.setString(3, txtContrasenaRegistrarse.text.toString())

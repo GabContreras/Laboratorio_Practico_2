@@ -9,6 +9,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import modelo.ClaseConexion
 
 class MainActivity : AppCompatActivity() {
@@ -28,26 +31,30 @@ class MainActivity : AppCompatActivity() {
         val btnRegistrarse = findViewById<TextView>(R.id.txtRegistrarse)
 
 
+        //Botones para ingresar al sistema
+
         btnIngresar.setOnClickListener {
-            //Cambio de pantalla para agregar tickets
-            val pantallaPrincipal = Intent(this,Ticket::class.java)
+            val pantallaPrincipal = Intent(this, Ticket::class.java)
 
-            val conexion = ClaseConexion().cadenaConexion()
+            GlobalScope.launch(Dispatchers.IO) {
+                val objConexion = ClaseConexion().cadenaConexion()
 
-            val comprobacionUsuario = conexion?.prepareStatement("SELECT * FROM TB_USUARIO WHERE NOMBRE_DE_USUARIO = ? AND CONTRASENA = ?")!!
-            comprobacionUsuario.setString(1, txtUsuario.text.toString())
-            comprobacionUsuario.setString(2, txtContrasena.text.toString())
-            val resultado = comprobacionUsuario.executeQuery()
 
-            if (resultado.next()) {
-                startActivity(pantallaPrincipal)
-            } else {
-                println("Usuario inválido, compruebe credenciales")
+                val comprobacionUsuario = objConexion?.prepareStatement("SELECT * FROM TB_USUARIO WHERE NOMBRE_DE_USUARIO = ? AND CONTRASENA = ?")!!
+                comprobacionUsuario.setString(1, txtUsuario.text.toString())
+                comprobacionUsuario.setString(2, txtContrasena.text.toString())
+                val resultado = comprobacionUsuario.executeQuery()
+
+                if (resultado.next()) {
+                    startActivity(pantallaPrincipal)
+                } else {
+                    println("Usuario no encontrado, verifique las credenciales")
+                }
             }
-
         }
-        //Cambio de pantalla para poder registrarse
+
         btnRegistrarse.setOnClickListener {
+            //Cambio de pantalla para poder registrarse
             val pantalla2 = Intent(this, Registrarse::class.java)
             startActivity(pantalla2)
         }

@@ -5,16 +5,16 @@ import java.sql.DriverManager
 
 class ClaseConexion {
 
-    fun cadenaConexion(): Connection?{
+    fun cadenaConexion():Connection? {
         try {
-            val ip = "jdbc:oracle:thin:@192.168.0.17:1521:xe"
-            val usuario = "system"
+            val ip = "jdbc:oracle:thin:@10.10.3.38:1521:xe"
+            val usuario = "GABRIEL_DEVELOPER"
             val contrasena = "hKAKI88v"
 
-            val connection = DriverManager.getConnection(ip, usuario, contrasena)
-            return connection
+            val conexion = DriverManager.getConnection(ip, usuario, contrasena)
+            return conexion
         }catch (e: Exception){
-            println("Este es el error: $e")
+            println("El error es este: $e")
             return null
         }
     }
