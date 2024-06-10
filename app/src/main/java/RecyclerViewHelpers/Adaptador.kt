@@ -15,6 +15,10 @@ import modelo.listaTickets
 
 class Adaptador(private var Datos: List<listaTickets>) : RecyclerView.Adapter<ViewHolder>() {
 
+    fun actualizarLista(nuevaLista: List<listaTickets>) {
+        Datos = nuevaLista
+        notifyDataSetChanged() // Notificar al adaptador sobre los cambios
+    }
 
 
 
@@ -29,8 +33,8 @@ class Adaptador(private var Datos: List<listaTickets>) : RecyclerView.Adapter<Vi
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = Datos[position]
-        holder.txtTextoTicket.text = item.titulo
+        val ticket = Datos[position]
+        holder.txtTextoTicket.text = ticket.titulo
 
 
 
