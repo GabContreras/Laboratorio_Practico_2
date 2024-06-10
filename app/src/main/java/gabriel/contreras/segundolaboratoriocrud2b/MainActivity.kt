@@ -1,10 +1,14 @@
 package gabriel.contreras.segundolaboratoriocrud2b
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import modelo.ClaseConexion
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,5 +20,23 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val btnRegistrarse = findViewById<TextView>(R.id.txtRegistrarse)
+
+        //Cambio de pantalla para poder registrarse
+        btnRegistrarse.setOnClickListener {
+            val pantalla2 = Intent(this,Registrarse::class.java)
+            startActivity(pantalla2)
+
+            //Cambio de pantalla para agregar tickets
+            val pantallaPrincipal = Intent(this,Ticket::class.java)
+
+            val conexion = ClaseConexion().cadenaConexion()
+
+            val comprobacionUsuario = conexion?.prepareStatement("SELECT * FROM TB_USUARIO WHERE NOMBRE_DE_USUARIO = ? AND CONTRASENA = ?")!!
+            comprobacionUsuario.setString(1, txtUsuario.text.toString())
+
+        }
     }
+
 }
