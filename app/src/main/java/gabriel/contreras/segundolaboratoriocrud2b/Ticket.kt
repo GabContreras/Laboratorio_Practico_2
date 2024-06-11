@@ -46,42 +46,32 @@ class Ticket : AppCompatActivity() {
 
         fun obtenerTickets(): List<listaTickets> {
             val listadoTickets = mutableListOf<listaTickets>()
-            try {
-                // Crear un objeto de la clase conexión
-                val objConexion = ClaseConexion().cadenaConexion() ?: throw NullPointerException("Error al obtener la conexión de la base de datos")
 
-                val statement = objConexion.createStatement() ?: throw NullPointerException("Error al crear el statement")
-                val resultSet = statement.executeQuery("select * from TB_TICKET") ?: throw NullPointerException("Error al ejecutar la consulta")
+            // Crear un objeto de la clase conexión
+            val objConexion = ClaseConexion().cadenaConexion()
 
-                // Recorrer todos los datos que me trajo el select
-                while (resultSet.next()) {
-                    val numeroTicket = resultSet.getString("NUMERO_DE_TICKET")
-                    val titulo = resultSet.getString("TITULO")
-                    val descripcion = resultSet.getString("DESCRIPCION")
-                    val autor = resultSet.getString("AUTOR")
-                    val emailAutor = resultSet.getString("EMAIL_AUTOR")
-                    val fechaCreacion = resultSet.getDate("FECHA_DE_CREACION")
-                    val estado = resultSet.getString("ESTADO")
-                    val fechaFinalizacion = resultSet.getDate("FECHA_DE_FINALIZACION")
+            //2 Crear un statement
+            val statement = objConexion?.createStatement()
+            val resultSet = statement?.executeQuery("SELECT NUMERO_DE_TICKET, TITULO, DESCRIPCION, AUTOR, EMAIL_AUTOR, FECHA_DE_CREACION, ESTADO FROM TB_TICKET")!!
+            // Recorrer todos los datos que me trajo el select
 
-                    val valoresJuntos = listaTickets(
-                        numeroTicket,
-                        titulo,
-                        descripcion,
-                        autor,
-                        emailAutor,
-                        fechaCreacion,
-                        estado,
-                        fechaFinalizacion
-                    )
-                    listadoTickets.add(valoresJuntos)
-                }
+            val listaTickets = mutableListOf<listaTickets>()
 
-            }
-            catch (e: Exception){
-                println("El error es este: $e")
+            while (resultSet.next()) {
+                val numeroTicket = resultSet.getString("NUMERO_DE_TICKET")
+                val titulo = resultSet.getString("TITULO")
+                val descripcion = resultSet.getString("DESCRIPCION")
+                val autor = resultSet.getString("AUTOR")
+                val emailAutor = resultSet.getString("EMAIL_AUTOR")
+                val fechaCreacion = resultSet.getDate("FECHA_DE_CREACION")
+                val estado = resultSet.getString("ESTADO")
+
+                val valoresJuntos = listaTickets(numeroTicket,titulo,descripcion,autor,
+                    emailAutor,fechaCreacion,estado)
+                listadoTickets.add(valoresJuntos)
             }
             return listadoTickets
+
         }
 
         // Ejecutamos la función
@@ -93,10 +83,10 @@ class Ticket : AppCompatActivity() {
             }
         }
 
-        // Programar el botón para agregar
+        //Botón para agregar tickets (ya sirve)
         btnAgregar.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                try {
+
                     // Crear un objeto de la clase conexión
                     val objConexion = ClaseConexion().cadenaConexion() ?: throw NullPointerException("Error al obtener la conexión de la base de datos")
 
@@ -118,9 +108,7 @@ class Ticket : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         (rcvTicket.adapter as? Adaptador)?.actualizarLista(nuevoTicket)
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+
             }
         }
     }

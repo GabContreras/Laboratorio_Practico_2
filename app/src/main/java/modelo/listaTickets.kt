@@ -4,14 +4,10 @@ import java.util.Date
 
 data class listaTickets (
     val numeroTicket: String,
-    val titulo: String,
-    val descripcion: String,
-    val autor: String,
-    val email: String,
-    val fecha: Date,
-    val estado: String,
-    val fechaFinalizacion: Date
-
-
-
-)
+    var titulo: String,
+    var descripcion: String,
+    var autor: String,
+    var email: String,
+    var fecha: Date,
+    var estado: String,
+    )

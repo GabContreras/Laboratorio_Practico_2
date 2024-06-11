@@ -42,14 +42,14 @@
         </HorizontalScrollView>
 
         <ImageView
-            android:id="@+id/imgEditar"
+            android:id="@+id/imgBorrar"
             android:layout_width="90dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/baseline_delete_24" />
 
         <ImageView
-            android:id="@+id/imgBorrar"
+            android:id="@+id/imgEditar"
             android:layout_width="90dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
